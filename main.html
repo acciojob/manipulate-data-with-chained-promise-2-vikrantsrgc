@@ -1,13 +1,49 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Promise Array Transformation</title>
+</head>
+<body>
+  <h2>Array Transformation Using Promises</h2>
+  <div id="output"></div>
 
-<html>
-  <head>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
+  <script>
+    // Step 1: Initial Promise that resolves with the array after 3 seconds
+    function getInitialArray() {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve([1, 2, 3, 4]);
+        }, 3000);
+      });
+    }
 
-  <body>
-    <!-- do not change this code -->
-    <div id="output"></div>
-    <script type="text/javascript" src="./script.js"></script>
-  </body>
+    // Step 2: Filter even numbers after 1-second delay
+    function filterEvenNumbers(arr) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const evenNumbers = arr.filter(num => num % 2 === 0);
+          document.getElementById("output").textContent = evenNumbers.toString(); // Show [2, 4]
+          resolve(evenNumbers);
+        }, 1000);
+      });
+    }
+
+    // Step 3: Multiply even numbers by 2 after another 2-second delay
+    function multiplyByTwo(arr) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const multiplied = arr.map(num => num * 2);
+          document.getElementById("output").textContent = multiplied.toString(); // Show [4, 8]
+          resolve(multiplied);
+        }, 2000);
+      });
+    }
+
+    // Execute the chain
+    getInitialArray()
+      .then(filterEvenNumbers)
+      .then(multiplyByTwo);
+  </script>
+</body>
 </html>
